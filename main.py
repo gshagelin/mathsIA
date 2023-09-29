@@ -1,23 +1,33 @@
+import random
 import numpy as np
 
-p = 67 #secret
-q = 97 #secret
+primeList = []
+def generate_prime():
+    for int in range(10000, 20000, 1):
+        intPrime = True
+        limit = int
+        for i in range(2, limit - 1, 1):
+            if int % i == 0:
+                #  print(str(int) + ' ' +str(i))
+                intPrime = False
+        if intPrime:
+            primeList.append(int)
+
+generate_prime()
+q = random.choice(primeList) #secret
+p = random.choice(primeList) #secret
+while p == q:
+    p = random.choice(primeList)
+
+print(q)
+print(p)
+
 n = p * q #public key
 
-lambda_n = 3 #secret
+lambdaP = p - 1
+lambdaQ = q - 1
 
-qPrime = False
-while qPrime == False:
-    q = np.random.randint(10000, 20000)
-    if q % 2 == 0 or q % 3 == 0:
-        qPrime = False
-    else:
-        limit = int(round(np.sqrt(q)))
-        for i in range(5, limit + 1, 6):
-            if n % (i+2) != 0:
-                qPrime = True
-                break
-            else:
-                qPrime = False
-print(str(q) + ' ' + str(qPrime))
+lambdaN = np.lcm(lambdaP, lambdaQ)    #secret
+
+
 
